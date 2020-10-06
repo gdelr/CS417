@@ -9,7 +9,7 @@ int main(){
   double **A;
   int N;
   fstream fin;
-  fin.open("matrix1.txt",ios::in);
+  fin.open("matrix.txt",ios::in);
   fin>>N;
 
   b = new double [N];
@@ -38,11 +38,7 @@ int main(){
     for(int col=0;col<N;col++){
       cout<<A[row][col]<<" ";
     }
-    cout<<endl;
-   }
-   cout<<"Vector b"<<endl;
-   for(int i=0;i<N;i++){
-     cout<<b[i]<<endl;
+    cout<<b[row]<<endl;
    }
 
    //=====================gauss algorithm===============================
@@ -61,15 +57,14 @@ int main(){
      //swap max row with curretn row
      for (int k=i;k<N+1;k++){
        double temp = A[maxRow][k];
-       double tempB = b[maxRow];
-       
        A[maxRow][k] = A[i][k];
        A[i][k]=temp;
-
-       b[maxRow]=b[i];
-       b[i]=tempB;
      }
      
+     double tempB = b[maxRow];
+     b[maxRow]=b[i];
+     b[i]=tempB;
+    
      //Make all rows below this one 0 in current colum
      for(int k=i+1;k<N;k++){
        double c = -A[k][i]/A[i][i];
@@ -84,7 +79,6 @@ int main(){
        }
      }
    }
-
    //backwards solve
    for(int i=N-1;i>=0;i--){
      x[i]=b[i]/A[i][i];
@@ -93,23 +87,22 @@ int main(){
      }
    }
 
-   cout<<"After swaps"<<endl;
+   cout<<"After swap"<<endl;
    cout<<"Matrix A = "<<endl;
    for(int row=0;row<N;row++){
     for(int col=0;col<N;col++){
       cout<<A[row][col]<<" ";
     }
-    cout<<endl;
+    cout<<b[row]<<endl;
    }
-   cout<<"Vector b:"<<endl;
-   for(int i=0;i<N;i++){
-     cout<<b[i]<<endl;
-   }
+   
    cout<<"The solution:"<<endl;
    for(int i=0;i<N;i++){
-     cout<<x[i]<<endl;
+     if(abs(x[i])<1e-10) x[i]=0.0;
+     cout<<x[i]<<" ";
    }
+   cout<<endl;
    
    return 0;
-   
+
 }
