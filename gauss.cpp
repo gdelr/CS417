@@ -9,7 +9,7 @@ int main(){
   double **A;
   int N;
   fstream fin;
-  fin.open("matrix.txt",ios::in);
+  fin.open("q4data.txt",ios::in);
   fin>>N;
 
   b = new double [N];
